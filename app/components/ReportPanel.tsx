@@ -12,7 +12,7 @@ interface Props {
   country: string;
   currency: string;
   totals: { totalWatts: number; totalCO2: number; totalCost: number; avgScore: number };
-  dashboardRef: React.RefObject<HTMLDivElement>;
+  dashboardRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function ReportPanel({
