@@ -102,10 +102,10 @@ sub: `${currency}${(totals.totalCost / 365).toFixed(1)}/day · ${currency}${tota
 color: "var(--warn)",
           },
           {
-            label: "🌫️ CO₂ PER YEAR",
-            value: `${totals.totalCO2.toFixed(0)}kg`,
-            sub: "carbon footprint",
-            color: "#ef4444",
+            label: "🌫️ CO₂ PER MONTH",
+value: `${(totals.totalCO2 / 12).toFixed(1)}kg`,
+sub: `${totals.totalCO2.toFixed(0)}kg per year total`,
+color: "#ef4444",
           },
           {
             label: "📊 ECO GRADE",
