@@ -214,27 +214,43 @@ export default function ViewfinderPanel({
 
         {/* Loading badge */}
         {!ready && (
-          <div
-            style={{
-              position: "absolute",
-              top: 12,
-              left: "50%",
-              transform: "translateX(-50%)",
-              background: "rgba(2,5,8,0.9)",
-              border: "1px solid var(--border)",
-              borderRadius: 20,
-              padding: "4px 12px",
-              fontSize: 10,
-              fontFamily: "var(--mono)",
-              letterSpacing: "0.15em",
-              color: "var(--text-muted)",
-            }}
-          >
-            LOADING MEDIAPIPE...
-          </div>
-        )}
+  <div style={{
+    position: "absolute", inset: 0,
+    background: "rgba(2,5,8,0.92)",
+    display: "flex", flexDirection: "column",
+    alignItems: "center", justifyContent: "center",
+    gap: 16, zIndex: 10,
+  }}>
+    <div style={{
+      width: 48, height: 48, borderRadius: "50%",
+      border: "2px solid var(--bg-panel)",
+      borderTop: "2px solid var(--accent)",
+      animation: "spin 1s linear infinite",
+    }} />
+    <div style={{ textAlign: "center" }}>
+      <div style={{
+        fontSize: 12, fontFamily: "var(--mono)",
+        color: "var(--accent)", letterSpacing: "0.2em",
+        marginBottom: 6,
+      }}>
+        LOADING AI MODEL
       </div>
-
+      <div style={{
+        fontSize: 10, fontFamily: "var(--mono)",
+        color: "var(--text-dim)", letterSpacing: "0.1em",
+      }}>
+        downloading hand tracking model...
+      </div>
+      <div style={{
+        fontSize: 10, fontFamily: "var(--mono)",
+        color: "var(--text-dim)", letterSpacing: "0.1em",
+        marginTop: 4,
+      }}>
+        this only happens once
+      </div>
+    </div>
+  </div>
+)}
       {/* HUD bar */}
       <div
         style={{
