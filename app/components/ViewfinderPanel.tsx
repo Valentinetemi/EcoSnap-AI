@@ -5,9 +5,9 @@ import { HandState } from "../hooks/useMediaPipe";
 import { AppPhase } from "../hooks/useEcoStore";
 
 interface Props {
-  videoRef: RefObject<HTMLVideoElement>;
-  canvasRef: RefObject<HTMLCanvasElement>;
-  captureRef: RefObject<HTMLCanvasElement>;
+    videoRef: RefObject<HTMLVideoElement | null>;
+    canvasRef: RefObject<HTMLCanvasElement | null>;
+    captureRef: RefObject<HTMLCanvasElement | null>;
   handState: HandState;
   phase: AppPhase;
   ready: boolean;
