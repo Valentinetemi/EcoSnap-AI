@@ -4,53 +4,81 @@ import { NextRequest } from "next/server";
 const genai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function POST(req: NextRequest) {
-  const { devices } = await req.json();
+  if (!process.env.GEMINI_API_KEY) {
+    return new Response("GEMINI_API_KEY not configured in .env.local", { status: 500 });
+  }
+  try {
+    const { devices, country, currency, ratePerKwh } = await req.json();
+    if (!devices?.length) return new Response("No devices", { status: 400 });
 
-  const model = genai.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genai.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const deviceList = devices.map((d: Record<string,unknown>, i: number) =>
-    `${i + 1}. ${d.appliance} — ${d.wattageMin}–${d.wattageMax}W, used ~${d.dailyHours}h/day`
-  ).join("\n");
+    const deviceList = devices.map((d: Record<string, unknown>, i: number) =>
+      `${i + 1}. ${d.appliance} — ${d.wattageMin}–${d.wattageMax}W, ~${d.dailyHours}h/day`
+    ).join("\n");
 
-  const prompt = `You are EcoFlow's AI Home Energy Auditor. Based on this household's scanned appliances:
+    const totalCO2 = devices.reduce((s: number, d: Record<string, unknown>) => s + Number(d.co2PerYear || 0), 0);
+    const totalCost = devices.reduce((s: number, d: Record<string, unknown>) => {
+      const avgW = (Number(d.wattageMin) + Number(d.wattageMax)) / 2;
+      return s + (avgW / 1000) * Number(d.dailyHours) * 365 * Number(ratePerKwh || 0.13);
+    }, 0);
 
+    const prompt = `You are EcoFlow's AI Home Energy Auditor for a user in ${country || "the world"}.
+Local electricity rate: ${ratePerKwh} USD/kWh. Currency symbol: ${currency}
+
+Scanned appliances:
 ${deviceList}
 
-Total estimated annual CO2: ${devices.reduce((s: number, d: Record<string,unknown>) => s + Number(d.co2PerYear || 0), 0).toFixed(1)} kg
-Total estimated annual cost: $${devices.reduce((s: number, d: Record<string,unknown>) => s + Number(d.costPerYear || 0), 0).toFixed(2)}
+Total CO2/year: ${totalCO2.toFixed(1)} kg
+Total annual cost: ${currency}${totalCost.toFixed(2)}
 
-Write a compelling, personalized home energy audit report. Include:
-1. EXECUTIVE SUMMARY — overall efficiency grade (A-F) and key finding
-2. TOP 3 QUICK WINS — specific actions ranked by impact and ease
-3. BIGGEST ENERGY OFFENDERS — which devices to prioritize and why
-4. 30-DAY ACTION PLAN — week by week changes
-5. PROJECTED SAVINGS — realistic $ and CO2 savings if they follow your plan
-6. GLOBAL IMPACT — equivalent trees planted, flights avoided, etc.
+Write a clear, friendly home energy audit. Use simple language anyone can understand — imagine explaining to someone who has never heard of carbon footprint before. Use ${currency} for all costs.
 
-Be specific, data-driven, and motivating. Use the actual device names. Format with clear sections.`;
+## ⚡ YOUR ENERGY GRADE
+Give them a grade A–F and one sentence summary.
 
-  const encoder = new TextEncoder();
+## 🔥 YOUR BIGGEST ENERGY EATERS
+Which devices cost the most and why. Use ${currency} amounts.
 
-  const stream = new ReadableStream({
-    async start(controller) {
-      try {
-        const result = await model.generateContentStream(prompt);
-        for await (const chunk of result.stream) {
-          const text = chunk.text();
-          if (text) controller.enqueue(encoder.encode(text));
+## ✅ TOP 3 THINGS TO DO THIS WEEK
+Simple, specific actions. Include how much ${currency} each saves per year.
+
+## 📅 30-DAY SAVINGS PLAN
+Week by week — what to do each week, written simply.
+
+## 💰 YOUR POTENTIAL SAVINGS
+How much ${currency} and how much CO2 they could save. Make it feel real and motivating.
+
+## 🌍 YOUR IMPACT ON THE PLANET
+Compare their CO2 to trees, car trips, or things they'd understand in ${country}.
+
+Keep it warm, encouraging, and simple. No jargon.`;
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          const result = await model.generateContentStream(prompt);
+          for await (const chunk of result.stream) {
+            const text = chunk.text();
+            if (text) controller.enqueue(encoder.encode(text));
+          }
+        } catch (e) {
+          controller.enqueue(encoder.encode(`\n\nError: ${e}`));
+        } finally {
+          controller.close();
         }
-      } catch (e) {
-        controller.enqueue(encoder.encode(`\n\nError generating report: ${e}`));
-      } finally {
-        controller.close();
-      }
-    },
-  });
+      },
+    });
 
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Transfer-Encoding": "chunked",
-    },
-  });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+        "X-Accel-Buffering": "no",
+      },
+    });
+  } catch (e) {
+    return new Response(`Server error: ${e}`, { status: 500 });
+  }
 }
