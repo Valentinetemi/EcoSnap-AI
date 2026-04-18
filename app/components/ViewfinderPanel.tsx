@@ -249,8 +249,9 @@ export default function ViewfinderPanel({
         this only happens once
       </div>
     </div>
-  </div>
+    </div>
 )}
+</div>
       {/* HUD bar */}
       <div
         style={{

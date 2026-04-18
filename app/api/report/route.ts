@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const { devices, country, currency, ratePerKwh } = await req.json();
     if (!devices?.length) return new Response("No devices", { status: 400 });
 
-    const model = genai.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genai.getGenerativeModel({ model: "gemini-flash-latest" });
 
     const deviceList = devices.map((d: Record<string, unknown>, i: number) =>
       `${i + 1}. ${d.appliance} — ${d.wattageMin}–${d.wattageMax}W, ~${d.dailyHours}h/day`
