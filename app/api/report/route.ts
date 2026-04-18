@@ -52,7 +52,15 @@ How much ${currency} and how much CO2 they could save. Make it feel real and mot
 ## 🌍 YOUR IMPACT ON THE PLANET
 Compare their CO2 to trees, car trips, or things they'd understand in ${country}.
 
-Keep it warm, encouraging, and simple. No jargon.`;
+Keep it warm, encouraging, and simple. No jargon.
+
+FORMATTING RULES:
+- Use ## for section headers
+- Use plain sentences, no bullet points with dashes
+- Use ✅ ⚡ 💰 🌍 emojis to start key points
+- Write numbers clearly: "₦2,400 per month" not "2400NGN/mo"
+- Maximum 4 sentences per section
+- Sound like a friendly expert, not a robot`;
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
