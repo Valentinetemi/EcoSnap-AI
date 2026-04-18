@@ -96,10 +96,10 @@ export default function Dashboard({ devices, totals, onGenerateReport, isStreami
             color: "var(--accent)",
           },
           {
-            label: "💸 YEARLY COST",
-            value: `${currency}${totals.totalCost.toFixed(0)}`,
-            sub: "estimated annually",
-            color: "var(--warn)",
+            label: "💸 MONTHLY COST",
+value: `${currency}${(totals.totalCost / 12).toFixed(0)}`,
+sub: `${currency}${(totals.totalCost / 365).toFixed(1)}/day · ${currency}${totals.totalCost.toFixed(0)}/yr`,
+color: "var(--warn)",
           },
           {
             label: "🌫️ CO₂ PER YEAR",
