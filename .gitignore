@@ -8,7 +8,7 @@
 /out/
 /build
 
-# Environment Variables (CRITICAL)
+# Environment Variables 
 .env
 .env.local
 .env.development.local
