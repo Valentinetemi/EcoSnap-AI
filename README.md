@@ -73,7 +73,7 @@ Then your **live dashboard** builds up as you scan more devices — showing you 
 | Technology | Purpose |
 |------------|---------|
 | **Next.js 14** | Frontend framework + API routes |
-| **Google Gemini 2.0 Flash** | Vision AI — appliance identification |
+| **Google Gemini Flash** | Vision AI — appliance identification |
 | **MediaPipe HandLandmarker** | Real-time pinch gesture detection (WebAssembly) |
 | **Framer Motion** | Animations and transitions |
 | **Recharts** | Live energy dashboard charts |
