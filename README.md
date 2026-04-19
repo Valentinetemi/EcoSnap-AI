@@ -1,5 +1,4 @@
-
-# ⚡ EcoSnap — See Which Device is Drinking Your Money
+# ⚡ EcoScan— See Which Device is Drinking Your Money
 
 > Point your camera at any appliance. Pinch your fingers. Know instantly what it costs you and the planet.
 
@@ -17,7 +16,7 @@ That moment stayed with me.
 
 **Millions of families across Nigeria, India, Ghana, Kenya, across the entire world pay electricity bills they don't understand.** Not because they're careless. But because nobody ever made it simple enough to see where the money is actually going.
 
-So I built EcoFlow for Earth Day.
+So I built EcoScan for Earth Day.
 
 ---
 
@@ -35,7 +34,7 @@ Just point and pinch. Like magic.
 
 ## 💡 What It Tells You
 
-The moment you pinch, Gemini 2.0 Flash Vision looks at your appliance and tells you:
+The moment you pinch, Gemini 2.0 Flash Latest looks at your appliance and tells you:
 
 - **What it is** — even if you don't know the name
 - **How many watts it drinks** every hour it's on
@@ -55,14 +54,14 @@ Then your **live dashboard** builds up as you scan more devices — showing you 
 - An old fridge running 24/7 can cost **3× more** than a new efficient one
 - If every household reduced energy use by just 10%, we'd offset **hundreds of millions of tonnes of CO₂** every year
 
-**My dad didn't need a lecture about climate change. He needed to know which appliance was eating his money. That's EcoFlow.**
+**My dad didn't need a lecture about climate change. He needed to know which appliance was eating his money. That's EcoScan.**
 
 ---
 
 ## 🚀 Features
 
 - **Real-time gesture detection** — MediaPipe HandLandmarker runs in the browser via WebAssembly. No backend needed for hand tracking
-- **AI appliance identification** — Gemini 2.0 Flash Vision identifies the device from a live camera frame
+- **AI appliance identification** — Gemini 2.0 Flash Latest identifies the device from a live camera frame
 - **Live energy dashboard** — Charts and stats update in real-time as you scan more devices
 - **20 countries supported** — Costs shown in local currency: Nigeria ₦, UK £, India ₹, Ghana ₵, Kenya KSh, USA $ and 14 more
 
@@ -73,16 +72,16 @@ Then your **live dashboard** builds up as you scan more devices — showing you 
 | Technology | Purpose |
 |------------|---------|
 | **Next.js 14** | Frontend framework + API routes |
-| **Google Gemini Flash** | Vision AI — appliance identification |
+| **Google Gemini 2.0 Flash Latest* | Vision AI — appliance identification |
 | **MediaPipe HandLandmarker** | Real-time pinch gesture detection (WebAssembly) |
 | **Framer Motion** | Animations and transitions |
 | **Recharts** | Live energy dashboard charts |
 
 ---
 
-## Use of Google Gemini
+## 🏆 Prize Category — Best use of Google Gemini
 
-Gemini Flash lite Vision is the heart of EcoFlow:
+Gemini 2.0 Flash Latest is the heart of EcoScan:
 
 - Identifies any appliance from a single camera frame
 - Returns structured data — wattage, CO₂, efficiency score, money-saving tips
@@ -120,4 +119,4 @@ Valentine Temi — Built for the DEV Earth Day Weekend Challenge 2025.
 
 *My dad still doesn't know which appliance was draining our electricity bill.*
 *Now he can find out in 3 seconds.*
-*That's why I built EcoFlow.* 🌍
+*That's why I built EcoScan.* 🌍
