@@ -28,7 +28,7 @@ So I built EcoScan for Earth Day.
 
 No typing. No forms. No complicated settings.
 
-Just point and pinch. Like magic.
+Just point and pinch. Like magic
 
 ---
 
